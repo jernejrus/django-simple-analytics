@@ -15,4 +15,10 @@ class VisitPerPage(models.Model):
         return f"{self.page} [{self.date.strftime('%Y-%m-%d')}] - {self.view_count}"
 
     class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["date", "page", "method", "username", "origin", "user_agent"],
+                name="unique_visit_per_page",
+            )
+        ]
         verbose_name_plural = "Visits per Page"
