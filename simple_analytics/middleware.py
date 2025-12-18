@@ -50,7 +50,7 @@ def process_analytics(request: HttpRequest, **kwargs: Any) -> VisitPerPage:
             analytics.view_count = F("view_count") + 1
             analytics.save()
     except IntegrityError:
-        analytics = VisitPerPage.objects.get(
+        analytics = VisitPerPage.objects.get_or_create(
             date=dt.date.today(),
             page=request.path,
             method=request.method or "",
